@@ -36,12 +36,13 @@ class Word:
     def reduced(cls, word):
         return cls(Word.reduce_word(word.word_str))
 
-    def reduce_word(word):
+    @classmethod
+    def reduce_word(cls, word):
         prev_word = word
-        word = Word.reduction_step(word)
+        word = cls.reduction_step(word)
         while word != prev_word:
             prev_word = word
-            word = Word.reduction_step(word)
+            word = cls.reduction_step(word)
         return word
 
     def reduction_step(word):
@@ -101,7 +102,7 @@ class Word:
         
 
 class FreeRelator(Word):
-    def isCyclicRoation(word1, word2):
+    def isCyclicRotation(word1, word2):
         assert len(word1) == len(word2)
         length = len(word1.word_str)
 
@@ -114,6 +115,10 @@ class FreeRelator(Word):
                 elif offset == length-1:
                     return True
         return False
+    
+    def reduce(self):
+        self.word_str = FreeRelator.reduce_word(self.word_str)
+        return self
     
     def reduction_step(word):
         reduced_word = ''
@@ -131,10 +136,10 @@ class FreeRelator(Word):
     def __eq__(self, other):
         self.reduce()
         other.reduce()
-        if len(self) != len(other.word_str): return False
+        if len(self) != len(other): return False
         if len(self) == 0: return True
 
-        return FreeRelator.isCyclicRoation(self,other) or FreeRelator.isCyclicRoation(self,Word.inverted(other))
+        return FreeRelator.isCyclicRotation(self,other) or FreeRelator.isCyclicRotation(self,Word.inverted(other))
     
     def __add__(self, other):
         return FreeRelator(self.word_str + other.word_str)

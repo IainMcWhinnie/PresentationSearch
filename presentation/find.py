@@ -3,7 +3,7 @@ from presentation.word import Word, FreeRelator
 from presentation.tools import convert
 
 class Search:
-    maxPoolSize = 70
+    maxPoolSize = 20
     noAddedEachRound = maxPoolSize
     sortFunction = len
     DEBUG = True
@@ -59,12 +59,24 @@ class Search:
         kleinRelator = convert('Xyxy').asFreeRelator()
         self.pool.sort(key=Search.sortFunction)
 
-        worstInPool = self.pool[-1]
+        # worstInPool = self.pool[-1]
         for i in range(20):
             if not self.performSearchRound():
                 break
             if kleinRelator in self.pool:
                 print('FOUND KLEIN RELATOR')
+                return True
+            self.printPool()
+
+        return False
+
+    def findRelator(self, relator):
+        self.pool.sort(key=Search.sortFunction)
+        for i in range(20):
+            if not self.performSearchRound():
+                break
+            if relator in self.pool:
+                print('Found relator')
                 break
             self.printPool()
         

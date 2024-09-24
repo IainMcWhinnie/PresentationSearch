@@ -1,6 +1,6 @@
-from presentation.word import Word
+from presentation.word import Word, FreeRelator
 from presentation.poly import Poly
-from presentation.tools import convert
+from presentation.tools import convert, combine, generate
 from presentation.presentation import Presentation
 from presentation.find import Search
 import functools, itertools
@@ -32,12 +32,11 @@ if __name__=='__main__' and False:
 exampleMannan = list(map(Word.asFreeRelator, exampleMannan))
 pres = Presentation(exampleMannan)
 print(pres)
+
 search = Search(pres)
-Search.sortFunction = lambda x: (len(x)+2*(x.height())**2, x.height())
+# Search.sortFunction = lambda x: (len(x)+2*(x.height())**2, x.height())
+Search.maxPoolSize = 20
 search.findKleinRelator()
 search.printPool()
 
-# for i in range(1):
-#     print(i)
-#     search.performSearchRound()
-# print('[', ', '.join(map(str,search.pool)), ']')
+print('[', ', '.join(map(str,search.pool)), ']')

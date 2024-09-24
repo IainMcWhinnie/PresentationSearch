@@ -69,6 +69,11 @@ class TestFreeRelator(unittest.TestCase):
         word = FreeRelator('xXyYX')
         assert Word.reduced(word) == Word('X')
 
+    def test_reduce_4(self):
+        word = FreeRelator('xYX')
+        word.reduce()
+        assert word == FreeRelator('Y')
+
     def test_reduced(self):
         word = FreeRelator('xyxxxYXxxYXYX')
         assert type(FreeRelator.reduced(word)) == FreeRelator
@@ -90,4 +95,7 @@ class TestFreeRelator(unittest.TestCase):
         assert FreeRelator('xX') == FreeRelator('')
 
     def test_eq_4(self):
-        assert FreeRelator('') == FreeRelator('')
+        assert FreeRelator('yyxYYXYXyyyx') == FreeRelator.reduced(FreeRelator('XXYYYxyxyyXYYx'))
+
+    def test_eq_5(self):
+        assert FreeRelator('XXYYYxyxyyXYYx') == FreeRelator('yyxYYXYXyyyx')

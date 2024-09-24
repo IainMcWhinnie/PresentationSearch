@@ -26,6 +26,6 @@ def generate(path1, path2):
                 newPath = combine(path1, path2, i ,j)
                 newPaths.append(newPath)
 
-                newPath = combine(path1, Word.inverted(path2), i, j)
+                newPath = combine(path1, FreeRelator.inverted(path2), i, j)
                 newPaths.append(newPath)
     return newPaths
